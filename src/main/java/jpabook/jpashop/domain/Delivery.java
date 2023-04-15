@@ -10,9 +10,9 @@ import javax.persistence.*;
 public class Delivery {
     @Id @GeneratedValue
     @Column(name="delivery_id")
-    private String id;
+    private Long id;
 
-    @OneToOne(mappedBy = "delivery")
+    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
     private Order order;
 
     //내장타입

@@ -1,5 +1,7 @@
 package jpabook.jpashop.domain;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Columns;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import java.util.List;
 
 @Entity
 @Table(name="orders")
+@Getter
+@Setter
 public class Order {
     @Id @GeneratedValue
     @Column (name="order_id")
@@ -20,10 +24,11 @@ public class Order {
     //양방향 연관관계 , 관계의 주인을 정해야 한다.
     private Member member;
 
-    @OneToMany(mappedBy="order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems=new ArrayList<>();
 
-    @OneToOne //일대일 관계일때 외래키는 자주 참조해 확인하는 order에서 한다
+    @OneToOne (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //일대일 관계일때 외래키는 자주 참조해 확인하는 order에서 한다
     @JoinColumn(name="delivery_id")
     private Delivery delivery;
 
